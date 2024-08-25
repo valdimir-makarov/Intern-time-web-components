@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Template Example</title>
+  <style>
+    .card {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 20px;
+      margin: 10px;
+      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body>
+  <template id="card-template">
+    <div class="card">
+      <h2></h2>
+      <p></p>
+    </div>
+  </template>
+
+  <div id="container"></div>
+
+  <script>
+    function createCard(title, content) {
+      const template = document.getElementById('card-template');
+      const clone = template.content.cloneNode(true);
+      clone.querySelector('h2').textContent = title;
+      clone.querySelector('p').textContent = content;
+      document.getElementById('container').appendChild(clone);
+    }
+
+    createCard('Card Title 1', 'This is some content for the first card.');
+    createCard('Card Title 2', 'This is some content for the second card.');
+    createCard('Card Title 3', 'This is some content for the third card.');
+  </script>
+</body>
+</html>
