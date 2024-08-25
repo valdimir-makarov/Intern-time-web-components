@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Counter App</title>
+  <style>
+    .counter {
+      font-size: 2em;
+      text-align: center;
+      margin: 20px;
+    }
+    button {
+      font-size: 1em;
+      padding: 10px 20px;
+      margin: 10px;
+    }
+  </style>
+</head>
+<body>
+  <counter-component count="0"></counter-component>
+
+  <script>
+    class CounterComponent extends HTMLElement {
+      static get observedAttributes() {
+        return ['count'];
+      }
+
+      constructor() {
+        super();
+        const shadow = this.attachShadow({ mode: 'open' });
+
+        this.counter = document.createElement('div');
+        this.counter.className = 'counter';
+        this.counter.textContent = this.getAttribute('count');
+
+        this.incrementButton = document.createElement('button');
+        this.incrementButton.textContent = 'Increment';
+        this.incrementButton.addEventListener('click', () => this.increment());
+
+        this.decrementButton = document.createElement('button');
+        this.decrementButton.textContent = 'Decrement';
+        this.decrementButton.addEventListener('click', () => this.decrement());
+
+        shadow.appendChild(this.counter);
+        shadow.appendChild(this.incrementButton);
+        shadow.appendChild(this.decrementButton);
+      }
+
+      attributeChangedCallback(name, oldValue, newValue) {
+        if (name === 'count') {
+          this.counter.textContent = newValue;
+        }
+      }
+
+      increment() {
+        let count = parseInt(this.getAttribute('count'), 10);
+        this.setAttribute('count', count + 1);
+      }
+
+      decrement() {
+        let count = parseInt(this.getAttribute('count'), 10);
+        this.setAttribute('count', count - 1);
+      }
+    }
+
+    customElements.define('counter-component', CounterComponent);
+  </script>
+</body>
+</html>
