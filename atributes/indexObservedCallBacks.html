@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toggle Visibility Example</title>
+  <style>
+    toggle-visibility {
+      display: block;
+      padding: 20px;
+      background-color: lightblue;
+      border: 1px solid blue;
+    }
+  </style>
+</head>
+<body>
+
+  <toggle-visibility visible="true">This is visible</toggle-visibility>
+  <toggle-visibility visible="false">This is hidden</toggle-visibility>
+
+  <script>
+    class ToggleVisibility extends HTMLElement {
+      static get observedAttributes() {
+        return ['visible'];
+      }
+
+      attributeChangedCallback(name, oldValue, newValue) {
+        if (name === 'visible') {
+          this.style.display = newValue === 'true' ? 'block' : 'none';
+        }
+      }
+    }
+
+    customElements.define('toggle-visibility', ToggleVisibility);
+  </script>
+</body>
+</html>
